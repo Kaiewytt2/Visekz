@@ -1,14 +1,11 @@
-FROM python:3.11
+FROM python:3.11 AS bilder
+COPY requirements.txt .
 
-WORKDIR /app
+RUN pip install --user -r requirements.txt
 
-COPY requirements.txt /app
 
-RUN pip install --no-cache-dir -r requirements.txt
+COPY app.py /
 
-COPY . /app
-
-#ENV PORT 8080
+ENV FLASK_APP=app_for_vis
 EXPOSE 8080
-
-CMD ["python", "app.py"]
+CMD ["python", "-u", "./app.py"]
